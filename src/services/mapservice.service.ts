@@ -10,8 +10,13 @@ export class MapService {
 
   constructor(public http:  Http) { }
 
-  getMapData(){
+  getRegionsData(){
 		return this.http.get('assets/regions.json')
+                      .map((res:any) => res.json());
+	}
+
+  getNPSRegion(){
+		return this.http.get('assets/us_nps_region.json')
                       .map((res:any) => res.json());
 	}
 
