@@ -47,7 +47,6 @@ export class MapComponent implements OnInit {
       .subscribe(
       data => {
         for (let i in data.features) {
-          debugger
           let feature: any = data.features[i] || {};
           let properties = feature.properties || {};
           let npsRegion = this.npsRegions[properties.dsm_id] || {};
@@ -66,10 +65,20 @@ export class MapComponent implements OnInit {
 
    countiestyle(feature) {
     return {
-      fillColor: feature.change > 0 ? '#ff0000' : '#008000',
-      weight: 0.3,
+      fillColor:  feature.change > 8 ? '#00cc00' :
+                  feature.change > 6  ? '#33ff33' :
+                  feature.change > 4  ? '#66ff66' :
+                  feature.change > 2  ? '#99ff99' :
+                  feature.change > 0  ? '#e6ffe6' : 
+                  feature.change < -2 ? '#ffe6e6' :
+                  feature.change < -4 ? '#ffb3b3' :
+                  feature.change < -6 ? '#ff8080' :
+                  feature.change < -8 ? '#ff4d4d' :
+                  feature.change == undefined ? "#EEEEEE" :
+                                        '#ff0000',
+      weight: 0 ,
       fillOpacity: 0.7
     };
   }
-  
+
 }
