@@ -46,16 +46,27 @@ export class MapComponent implements OnInit {
     this.mapService.getRegionsData()
       .subscribe(
       data => {
+        // this.regionsData.crs = data.crs;
+        // this.regionsData.features = [];
+        // this.regionsData.type = data.type;
         for (let i in data.features) {
           let feature: any = data.features[i] || {};
           let properties = feature.properties || {};
           let npsRegion = this.npsRegions[properties.dsm_id] || {};
           if(npsRegion.change){
             data.features[i].change = npsRegion.change;
+            data.features[i].npsRegion = npsRegion;
+           // this.regionsData.features.push(data.features[i]);
           }
+          else{
+            data.features[i].npsRegion = {};
+            data.features[i].npsRegion["2016"] = {};            
+            data.features[i].npsRegion["2015"] = {};            
+            data.features[i].npsRegion["2014"] = {}; 
+          }                       
         }
         this.regionsData = data;
-        L.geoJSON(this.regionsData, { style: this.countiestyle }).addTo(this.map);
+        L.geoJSON(this.regionsData, { style: this.countiestyle, onEachFeature:this.onEachFeature }).addTo(this.map);
       },
       error => {
         console.log(error)
@@ -79,6 +90,24 @@ export class MapComponent implements OnInit {
       weight: 0 ,
       fillOpacity: 0.7
     };
-  }
+   }
+
+   onEachFeature(feature,layer) {
+      if(feature.npsRegion['2016'] && feature.npsRegion['2016'].mean && feature.npsRegion['2015'] && feature.npsRegion['2015'].mean && feature.npsRegion['2014'] && feature.npsRegion['2014'].mean){
+          layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + feature.npsRegion['2016'].mean + ' </br>' + '2015 : ' + feature.npsRegion['2015'].mean + '  </br> 2014 : ' + feature.npsRegion['2014'].mean + '</div');
+      }
+      else if(feature.npsRegion['2016'] && feature.npsRegion['2016'].mean && feature.npsRegion['2015'] && feature.npsRegion['2015'].mean){
+          layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + feature.npsRegion['2016'].mean + ' </br>' + '2015 : ' + feature.npsRegion['2015'].mean + ' </div>');          
+      }
+      else{
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
+      }
+      layer.on("mouseover", function () {
+        layer.openPopup();
+      });
+      layer.on("mouseout", function () {
+       // layer.closePopup();
+      });
+    };
 
 }
