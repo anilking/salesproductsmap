@@ -1,6 +1,6 @@
 import { MapService } from './../../services/mapservice.service';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
@@ -13,12 +13,14 @@ export class MapComponent implements OnInit {
   public mapboxAccessToken: string = 'pk.eyJ1IjoiYW5pbHBhdGh1cmkiLCJhIjoiY2oybDhmcWF0MDAwMDJxcWtzMDgwZWI3cyJ9.hzryXsu_ec_AafR-QzzVUQ';
   public npsRegions: any = {};
   public regionsData: any = {};
+  public ctx:CanvasRenderingContext2D;
+   @ViewChild("myCanvas") myCanvas;
+
   constructor(public mapService: MapService) { }
 
   ngOnInit() {
     this.map = L.map('map')
-                .setView([37.8, -96], 4);
-
+                .setView([37.8, -96],4);
                 
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + this.mapboxAccessToken, {
       id: 'mapbox.light',
@@ -26,7 +28,19 @@ export class MapComponent implements OnInit {
     }).addTo(this.map);
 
     this.getNPSRegion();
-    
+
+    const canvasEl: HTMLCanvasElement = this.myCanvas.nativeElement;
+    let ctx = canvasEl.getContext("2d");
+    var my_gradient = ctx.createLinearGradient(0, 0, 285, 0);
+
+    my_gradient.addColorStop(0, "#ff0000");
+    my_gradient.addColorStop(0.5, "#e6ffe6");
+    my_gradient.addColorStop(1, "#00cc00");
+    ctx.fillStyle = my_gradient;      
+    ctx.fillText("-8", 20,60); 
+    ctx.fillText("0", 138,60); 
+    ctx.fillText("10", 260,60); 
+    ctx.fillRect(20, 20, 250, 25);
   }
 
   getNPSRegion() {
@@ -102,11 +116,11 @@ export class MapComponent implements OnInit {
       else{
         layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
       }
-      layer.on("mouseover", function () {
-        layer.openPopup();
+      layer.on("mouseover", function (e) {
+        layer.openPopup(e.latlng);
       });
       layer.on("mouseout", function () {
-       // layer.closePopup();
+        layer.closePopup();
       });
     };
 

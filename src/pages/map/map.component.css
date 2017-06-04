@@ -1,0 +1,5 @@
+.canvas-class{
+    position: absolute;
+    z-index: 999;
+    right: 7%;
+}
