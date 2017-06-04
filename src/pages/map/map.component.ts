@@ -34,10 +34,10 @@ export class MapComponent implements OnInit {
     var my_gradient = ctx.createLinearGradient(0, 0, 285, 0);
 
     my_gradient.addColorStop(0, "#ff0000");
-    my_gradient.addColorStop(0.5, "#e6ffe6");
+    my_gradient.addColorStop(0.5, "#ffa500");
     my_gradient.addColorStop(1, "#00cc00");
     ctx.fillStyle = my_gradient;      
-    ctx.fillText("-8", 20,60); 
+    ctx.fillText("-10", 20,60); 
     ctx.fillText("0", 138,60); 
     ctx.fillText("10", 260,60); 
     ctx.fillRect(20, 20, 250, 25);
@@ -94,7 +94,7 @@ export class MapComponent implements OnInit {
                   feature.change > 6  ? '#33ff33' :
                   feature.change > 4  ? '#66ff66' :
                   feature.change > 2  ? '#99ff99' :
-                  feature.change > 0  ? '#e6ffe6' : 
+                  feature.change > 0  ? '#ffa500' : 
                   feature.change < -2 ? '#ffe6e6' :
                   feature.change < -4 ? '#ffb3b3' :
                   feature.change < -6 ? '#ff8080' :
