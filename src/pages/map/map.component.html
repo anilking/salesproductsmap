@@ -1,6 +1,6 @@
   <ul class="nav nav-tabs">
     <li class="dropdown active">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{selectedRegion}}<span class="caret"></span></a>
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span *ngIf="!selectedRegion">select nps</span> <span *ngIf="selectedRegion">{{selectedRegion}}</span><span class="caret"></span></a>
       <ul class="dropdown-menu">
         <li *ngFor="let region of regionsList" (click)="regionChange(region)"><a href="#">{{region}}</a></li>                      
       </ul>
@@ -11,11 +11,10 @@
         <li *ngFor="let year of yearsList" (click)="yearChange(year)"><a href="#">{{year}}</a></li>                      
       </ul>
     </li>
-    <li *ngIf="selectedYear"><a href="#">Q1</a></li>
-    <li *ngIf="selectedYear"><a href="#">Q2</a></li>
-    <li *ngIf="selectedYear"><a href="#">Q3</a></li>
-    <li *ngIf="selectedYear"><a href="#">Q4</a></li>    
-    <li *ngIf="selectedYear"><a href="#">Final</a></li>        
+    <li *ngIf="selectedYear" (click)="onQ1Select()"><a href="#">Q1</a></li>
+    <li *ngIf="selectedYear" (click)="onQ2Select()"><a href="#">Q2</a></li>
+    <li *ngIf="selectedYear" (click)="onQ3Select()"><a href="#">Q3</a></li>
+    <li *ngIf="selectedYear" (click)="onQ4Select()"><a href="#">Q4</a></li>       
   </ul>
 
  

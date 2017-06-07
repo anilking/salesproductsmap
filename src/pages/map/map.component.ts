@@ -16,7 +16,7 @@ export class MapComponent implements OnInit {
   public ctx: CanvasRenderingContext2D;
   public regionsList: any = [];
   public yearsList: any = [];
-  public selectedRegion: string = "Channel";
+  public selectedRegion: string = "";
   public selectedYear: string = "";
 
   @ViewChild("myCanvas") myCanvas;
@@ -24,6 +24,13 @@ export class MapComponent implements OnInit {
   constructor(public mapService: MapService) { }
 
   ngOnInit() {
+    this.mapInitialization();
+    this.getRegionsData();
+
+    this.regionsList = ["Channel", "Region", "National"];
+    this.yearsList = ["2014-15", "2015-16", "2016-17"];
+  }
+  mapInitialization(){
     this.map = L.map('map')
       .setView([37.8, -96], 4);
 
@@ -31,13 +38,7 @@ export class MapComponent implements OnInit {
       id: 'mapbox.light',
       attribution: '<a href="http://openstreetmap.org">Open Street Map</a>'
     }).addTo(this.map);
-
-    this.getRegionsData();
-
-    this.regionsList = ["Channel", "Region", "National"];
-    this.yearsList = ["2014-15", "2015-16", "2016-17"];
   }
-
   // getNPSRegion() {
   //   this.mapService.getNPSRegion()
   //     .subscribe(
@@ -54,39 +55,70 @@ export class MapComponent implements OnInit {
     this.mapService.getRegionsData()
       .subscribe(
       data => {
-        // this.regionsData.crs = data.crs;
-        // this.regionsData.features = [];
-        // this.regionsData.type = data.type;
-        // for (let i in data.features) {
-        //   let feature: any = data.features[i] || {};
-        //   let properties = feature.properties || {};
-        //   let npsRegion = this.npsRegions[properties.dsm_id] || {};
-        //   if(npsRegion.change){
-        //     data.features[i].change = npsRegion.change;
-        //     data.features[i].npsRegion = npsRegion;
-        //    // this.regionsData.features.push(data.features[i]);
-        //   }
-        //   else{
-        //     data.features[i].npsRegion = {};
-        //     data.features[i].npsRegion["2016"] = {};            
-        //     data.features[i].npsRegion["2015"] = {};            
-        //     data.features[i].npsRegion["2014"] = {}; 
-        //   }                       
-        // }
-        this.regionsData = data;
-        L.geoJSON(this.regionsData).addTo(this.map);
+        this.regionsData = data || {};
+        L.geoJSON(this.regionsData,  { style: this.countieStyle}).addTo(this.map);
       },
       error => {
         console.log(error)
       }
       );
+  };
+
+  countieStyle(feature) {
+    return {
+      weight:0.3
+    };
   } 
 
-  countiestyle(feature) {
+  yearCountieStyle(feature) {
     return {
       fillColor: feature.npsRegion.change > 8 ? '#00cc00' :
                  feature.npsRegion.change > 5 ? '#FFA500' :
                   feature.npsRegion.change == undefined ? "#EBECEE" :
+                          '#ff0000',
+      weight: 0,
+      fillOpacity: 0.7
+    };
+  }
+
+  countiesStyleBYQ1(feature) {
+    return {
+      fillColor: feature.npsRegion.Q1dt > 8 ? '#00cc00' :
+                 feature.npsRegion.Q1dt > 5 ? '#FFA500' :
+                  feature.npsRegion.Q1dt == undefined ? "#EBECEE" :
+                          '#ff0000',
+      weight: 0,
+      fillOpacity: 0.7
+    };
+  }
+
+  countiesStyleBYQ2(feature) {
+    return {
+      fillColor: feature.npsRegion.Q2dt > 8 ? '#00cc00' :
+                 feature.npsRegion.Q2dt > 5 ? '#FFA500' :
+                  feature.npsRegion.Q2dt == undefined ? "#EBECEE" :
+                          '#ff0000',
+      weight: 0,
+      fillOpacity: 0.7
+    };
+  }
+
+  countiesStyleBYQ3(feature) {
+    return {
+      fillColor: feature.npsRegion.Q3dt > 8 ? '#00cc00' :
+                 feature.npsRegion.Q3dt > 5 ? '#FFA500' :
+                  feature.npsRegion.Q3dt == undefined ? "#EBECEE" :
+                          '#ff0000',
+      weight: 0,
+      fillOpacity: 0.7
+    };
+  }
+
+  countiesStyleBYQ4(feature) {
+    return {
+      fillColor: feature.npsRegion.Q4dt > 8 ? '#00cc00' :
+                 feature.npsRegion.Q4dt > 5 ? '#FFA500' :
+                  feature.npsRegion.Q4dt == undefined ? "#EBECEE" :
                           '#ff0000',
       weight: 0,
       fillOpacity: 0.7
@@ -125,28 +157,50 @@ export class MapComponent implements OnInit {
     this.mapService.getNPSRegion(params)
       .subscribe(
       data => {
+        this.map.remove();
+        this.mapInitialization();
         this.npsRegions = data || {};
-        let regionsData = this.regionsData;
-        for (let i in regionsData.features) {
-          let feature: any = regionsData.features[i] || {};
+        for (let i in this.regionsData.features) {
+          let feature: any = this.regionsData.features[i] || {};
           let properties = feature.properties || {};
           let npsRegion = this.npsRegions[properties.dsm_id] || {};
           if (npsRegion.change) {
-            regionsData.features[i].npsRegion = npsRegion || {};
+            this.regionsData.features[i].npsRegion = npsRegion || {};
           }
           else {
-            regionsData.features[i].npsRegion = {};
-            regionsData.features[i].npsRegion["2016"] = {};
-            regionsData.features[i].npsRegion["2015"] = {};
-            regionsData.features[i].npsRegion["2014"] = {};
+            this.regionsData.features[i].npsRegion = {};
+            this.regionsData.features[i].npsRegion["2016"] = {};
+            this.regionsData.features[i].npsRegion["2015"] = {};
+            this.regionsData.features[i].npsRegion["2014"] = {};
           }
         }
-        L.geoJSON(regionsData, { style: this.countiestyle}).addTo(this.map);
+        L.geoJSON(this.regionsData, { style: this.yearCountieStyle}).addTo(this.map);
       },
       error => {
         console.log(error)
       }
       );
+  }
+
+  onQ1Select(){
+        this.map.remove();
+        this.mapInitialization();
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ1}).addTo(this.map);
+  }
+  onQ2Select(){
+        this.map.remove();
+        this.mapInitialization();
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ2}).addTo(this.map);
+  }
+  onQ3Select(){
+        this.map.remove();
+        this.mapInitialization();
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ3}).addTo(this.map);
+  }
+  onQ4Select(){
+        this.map.remove();
+        this.mapInitialization();
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ4}).addTo(this.map);
   }
 
 }
