@@ -1,7 +1,24 @@
- <p class="title-canvas"> NPS Change rate</p>
- 
- <canvas #myCanvas class="canvas-class">
-Your browser does not support the HTML5 canvas tag.</canvas>
- 
+  <ul class="nav nav-tabs">
+    <li class="dropdown active">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{selectedRegion}}<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li *ngFor="let region of regionsList" (click)="regionChange(region)"><a href="#">{{region}}</a></li>                      
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span *ngIf="!selectedYear">select year</span> <span *ngIf="selectedYear">{{selectedYear}}</span><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li *ngFor="let year of yearsList" (click)="yearChange(year)"><a href="#">{{year}}</a></li>                      
+      </ul>
+    </li>
+    <li *ngIf="selectedYear"><a href="#">Q1</a></li>
+    <li *ngIf="selectedYear"><a href="#">Q2</a></li>
+    <li *ngIf="selectedYear"><a href="#">Q3</a></li>
+    <li *ngIf="selectedYear"><a href="#">Q4</a></li>    
+    <li *ngIf="selectedYear"><a href="#">Final</a></li>        
+  </ul>
+
  
  <div style="height: 500px" id="map"></div>
+
+ 

@@ -1,14 +1,7 @@
-.canvas-class{
-    position: absolute;
-    z-index: 999;
-    right: 7%;
-    margin-top: 7px;    
+.nav{
+    margin-bottom: 10px;
 }
 
-.title-canvas{
-    position: absolute;
-    z-index: 999;
-    margin-top: 5px;
-    font-weight: 600;
-    right: 19%;
+.open>.dropdown-menu{
+    z-index: 2000;
 }
