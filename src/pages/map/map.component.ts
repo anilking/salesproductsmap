@@ -174,7 +174,7 @@ export class MapComponent implements OnInit {
             this.regionsData.features[i].npsRegion["2014"] = {};
           }
         }
-        L.geoJSON(this.regionsData, { style: this.yearCountieStyle}).addTo(this.map);
+        L.geoJSON(this.regionsData, { style: this.yearCountieStyle, onEachFeature : this.onEachFeature}).addTo(this.map);
       },
       error => {
         console.log(error)
@@ -185,22 +185,22 @@ export class MapComponent implements OnInit {
   onQ1Select(){
         this.map.remove();
         this.mapInitialization();
-        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ1}).addTo(this.map);
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ1, onEachFeature : this.onEachFeature}).addTo(this.map);
   }
   onQ2Select(){
         this.map.remove();
         this.mapInitialization();
-        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ2}).addTo(this.map);
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ2, onEachFeature : this.onEachFeature}).addTo(this.map);
   }
   onQ3Select(){
         this.map.remove();
         this.mapInitialization();
-        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ3}).addTo(this.map);
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ3, onEachFeature : this.onEachFeature}).addTo(this.map);
   }
   onQ4Select(){
         this.map.remove();
         this.mapInitialization();
-        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ4}).addTo(this.map);
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ4, onEachFeature : this.onEachFeature}).addTo(this.map);
   }
 
 }
