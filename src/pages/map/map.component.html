@@ -7,7 +7,7 @@
     </li>
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span *ngIf="!selectedYear">select year</span> <span *ngIf="selectedYear">{{selectedYear}}</span><span class="caret"></span></a>
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu" *ngIf="selectedRegion">
         <li *ngFor="let year of yearsList" (click)="yearChange(year)"><a href="#">{{year}}</a></li>                      
       </ul>
     </li>

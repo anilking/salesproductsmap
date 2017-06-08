@@ -25,8 +25,6 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.mapInitialization();
-    this.getRegionsData();
-
     this.regionsList = ["Channel", "Region", "National"];
     this.yearsList = ["2014-15", "2015-16", "2016-17"];
   }
@@ -39,30 +37,7 @@ export class MapComponent implements OnInit {
       attribution: '<a href="http://openstreetmap.org">Open Street Map</a>'
     }).addTo(this.map);
   }
-  // getNPSRegion() {
-  //   this.mapService.getNPSRegion()
-  //     .subscribe(
-  //       data => {
-  //         this.npsRegions = data || {};
-  //       },
-  //       error => {
-  //         console.log(error)
-  //       }
-  //     );
-  // }
 
-  getRegionsData() {
-    this.mapService.getRegionsData()
-      .subscribe(
-      data => {
-        this.regionsData = data || {};
-        L.geoJSON(this.regionsData,  { style: this.countieStyle}).addTo(this.map);
-      },
-      error => {
-        console.log(error)
-      }
-      );
-  };
 
   countieStyle(feature) {
     return {
@@ -146,6 +121,26 @@ export class MapComponent implements OnInit {
 
   regionChange(selectedRegion) {
     this.selectedRegion = selectedRegion;
+    this.selectedYear = "";
+    let url = this.selectedRegion.toLocaleLowerCase() || "";
+    if(url == "region"){
+      url = "regional";
+    }
+    let params = {
+      'usOrg': url
+    }
+     this.mapService.getRegionsData(params)
+      .subscribe(
+      data => {
+        this.map.remove();
+        this.mapInitialization();
+        this.regionsData = data || {};
+        L.geoJSON(this.regionsData,  { style: this.countieStyle}).addTo(this.map);
+      },
+      error => {
+        console.log(error)
+      }
+      );
 
   }
 
@@ -164,6 +159,7 @@ export class MapComponent implements OnInit {
           let feature: any = this.regionsData.features[i] || {};
           let properties = feature.properties || {};
           let npsRegion = this.npsRegions[properties.dsm_id] || {};
+          console.log(properties.dsm_id)
           if (npsRegion.change) {
             this.regionsData.features[i].npsRegion = npsRegion || {};
           }

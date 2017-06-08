@@ -10,8 +10,8 @@ export class MapService {
 
   constructor(public http:  Http) { }
 
-  getRegionsData(){
-		return this.http.get('assets/regions.json')
+  getRegionsData(params){
+		return this.http.get('assets/us_org_' + params.usOrg + '_dsm.json')
                       .map((res:any) => res.json());
 	}
 
