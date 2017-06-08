@@ -159,7 +159,6 @@ export class MapComponent implements OnInit {
           let feature: any = this.regionsData.features[i] || {};
           let properties = feature.properties || {};
           let npsRegion = this.npsRegions[properties.dsm_id] || {};
-          console.log(properties.dsm_id)
           if (npsRegion.change) {
             this.regionsData.features[i].npsRegion = npsRegion || {};
           }
