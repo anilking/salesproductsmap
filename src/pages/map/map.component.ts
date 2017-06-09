@@ -18,6 +18,7 @@ export class MapComponent implements OnInit {
   public yearsList: any = [];
   public selectedRegion: string = "";
   public selectedYear: string = "";
+  public isNpsRegions: boolean = false;
 
   @ViewChild("myCanvas") myCanvas;
 
@@ -46,58 +47,88 @@ export class MapComponent implements OnInit {
   } 
 
   yearCountieStyle(feature) {
-    return {
-      fillColor: feature.npsRegion.change > 8 ? '#00cc00' :
-                 feature.npsRegion.change > 5 ? '#FFA500' :
-                  feature.npsRegion.change == undefined ? "#EBECEE" :
-                          '#ff0000',
-      weight: 0,
-      fillOpacity: 0.7
-    };
+    if(feature.isNpsRegion){
+        let styleObj =  {
+            fillColor: feature.npsRegion.changeColor != undefined ? feature.npsRegion.changeColor : "#EBECEE",
+            weight: 0,
+            fillOpacity: 0.7
+          };
+        return styleObj;
+    }
+    else{
+      let styleObj = {
+                        weight:0.3
+                      };
+       return styleObj;
+    }
   }
 
   countiesStyleBYQ1(feature) {
-    return {
-      fillColor: feature.npsRegion.Q1dt > 8 ? '#00cc00' :
-                 feature.npsRegion.Q1dt > 5 ? '#FFA500' :
-                  feature.npsRegion.Q1dt == undefined ? "#EBECEE" :
-                          '#ff0000',
-      weight: 0,
-      fillOpacity: 0.7
-    };
+    if(feature.isNpsRegion){
+        let styleObj =  {
+            fillColor: feature.npsRegion.Q1dtColor != undefined ? feature.npsRegion.Q1dtColor : "#EBECEE",
+            weight: 0,
+            fillOpacity: 0.7
+          };
+        return styleObj;
+    }
+    else{
+      let styleObj = {
+                        weight:0.3
+                      };
+       return styleObj;
+    }
   }
 
   countiesStyleBYQ2(feature) {
-    return {
-      fillColor: feature.npsRegion.Q2dt > 8 ? '#00cc00' :
-                 feature.npsRegion.Q2dt > 5 ? '#FFA500' :
-                  feature.npsRegion.Q2dt == undefined ? "#EBECEE" :
-                          '#ff0000',
-      weight: 0,
-      fillOpacity: 0.7
-    };
+    if(feature.isNpsRegion){
+        let styleObj =  {
+            fillColor: feature.npsRegion.Q2dtColor != undefined ? feature.npsRegion.Q2dtColor : "#EBECEE",
+            weight: 0,
+            fillOpacity: 0.7
+          };
+        return styleObj;
+    }
+    else{
+      let styleObj = {
+                        weight:0.3
+                      };
+       return styleObj;
+    }
   }
 
   countiesStyleBYQ3(feature) {
-    return {
-      fillColor: feature.npsRegion.Q3dt > 8 ? '#00cc00' :
-                 feature.npsRegion.Q3dt > 5 ? '#FFA500' :
-                  feature.npsRegion.Q3dt == undefined ? "#EBECEE" :
-                          '#ff0000',
-      weight: 0,
-      fillOpacity: 0.7
-    };
+    if(feature.isNpsRegion){
+        let styleObj =  {
+            fillColor: feature.npsRegion.Q3dtColor != undefined ? feature.npsRegion.Q3dtColor : "#EBECEE",
+            weight: 0,
+            fillOpacity: 0.7
+          };
+        return styleObj;
+    }
+    else{
+      let styleObj = {
+                        weight:0.3
+                      };
+       return styleObj;
+    }
   }
 
   countiesStyleBYQ4(feature) {
-    return {
-      fillColor: feature.npsRegion.Q4dt > 8 ? '#00cc00' :
-                 feature.npsRegion.Q4dt > 5 ? '#FFA500' :
-                  feature.npsRegion.Q4dt == undefined ? "#EBECEE" :
-                          '#ff0000',
-      weight: 0,
-      fillOpacity: 0.7
-    };
+    if(feature.isNpsRegion){
+        let styleObj =  {
+            fillColor: feature.npsRegion.Q4dtColor != undefined ? feature.npsRegion.Q4dtColor : "#EBECEE",
+            weight: 0,
+            fillOpacity: 0.7
+          };
+        return styleObj;
+    }
+    else{
+      let styleObj = {
+              weight:0.3
+            };
+       return styleObj;
+    }
   }
 
   onEachFeature(feature, layer) {
@@ -158,16 +189,25 @@ export class MapComponent implements OnInit {
         for (let i in this.regionsData.features) {
           let feature: any = this.regionsData.features[i] || {};
           let properties = feature.properties || {};
-          let npsRegion = this.npsRegions[properties.dsm_id] || {};
+          let npsRegion;
+          if(this.selectedRegion == "Region"){
+             npsRegion = this.npsRegions[properties.terrid] || {};
+          }
+          else{
+            npsRegion = this.npsRegions[properties.dsm_id] || {};
+          }
           if (npsRegion.change) {
             this.regionsData.features[i].npsRegion = npsRegion || {};
+            this.regionsData.features[i].isNpsRegion = true;
           }
           else {
             this.regionsData.features[i].npsRegion = {};
+            this.regionsData.features[i].isNpsRegion = false;
             this.regionsData.features[i].npsRegion["2016"] = {};
             this.regionsData.features[i].npsRegion["2015"] = {};
             this.regionsData.features[i].npsRegion["2014"] = {};
           }
+          this.regionsData.features[i].properties.dsm_name = properties.terrdescr;
         }
         L.geoJSON(this.regionsData, { style: this.yearCountieStyle, onEachFeature : this.onEachFeature}).addTo(this.map);
       },

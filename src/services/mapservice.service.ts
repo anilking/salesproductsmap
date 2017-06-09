@@ -16,7 +16,7 @@ export class MapService {
 	}
 
   getNPSRegion(params){
-		return this.http.get('assets/us_nps_region_' + params.year +  '.json')
+		return this.http.get('assets/us_nps_region_' + params.year +  '_color.json')
                       .map((res:any) => res.json());
 	}
 
