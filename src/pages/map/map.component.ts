@@ -192,6 +192,7 @@ export class MapComponent implements OnInit {
           let npsRegion;
           if(this.selectedRegion == "Region"){
              npsRegion = this.npsRegions[properties.terrid] || {};
+             this.regionsData.features[i].properties.dsm_name = properties.terrdescr;
           }
           else{
             npsRegion = this.npsRegions[properties.dsm_id] || {};
@@ -203,11 +204,10 @@ export class MapComponent implements OnInit {
           else {
             this.regionsData.features[i].npsRegion = {};
             this.regionsData.features[i].isNpsRegion = false;
-            this.regionsData.features[i].npsRegion["2016"] = {};
-            this.regionsData.features[i].npsRegion["2015"] = {};
-            this.regionsData.features[i].npsRegion["2014"] = {};
+            this.regionsData.features[i].npsRegion["2016"] = {"Q1": {},"Q2":{},"Q3":{},"Q4":{}};
+            this.regionsData.features[i].npsRegion["2015"] = {"Q1": {},"Q2":{},"Q3":{},"Q4":{}};
+            this.regionsData.features[i].npsRegion["2014"] = {"Q1": {},"Q2":{},"Q3":{},"Q4":{}};
           }
-          this.regionsData.features[i].properties.dsm_name = properties.terrdescr;
         }
         L.geoJSON(this.regionsData, { style: this.yearCountieStyle, onEachFeature : this.onEachFeature}).addTo(this.map);
       },
@@ -220,22 +220,126 @@ export class MapComponent implements OnInit {
   onQ1Select(){
         this.map.remove();
         this.mapInitialization();
-        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ1, onEachFeature : this.onEachFeature}).addTo(this.map);
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ1, onEachFeature : this.onEachFeatureQ1}).addTo(this.map);
   }
   onQ2Select(){
         this.map.remove();
         this.mapInitialization();
-        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ2, onEachFeature : this.onEachFeature}).addTo(this.map);
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ2, onEachFeature : this.onEachFeatureQ2}).addTo(this.map);
   }
   onQ3Select(){
         this.map.remove();
         this.mapInitialization();
-        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ3, onEachFeature : this.onEachFeature}).addTo(this.map);
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ3, onEachFeature : this.onEachFeatureQ3}).addTo(this.map);
   }
   onQ4Select(){
         this.map.remove();
         this.mapInitialization();
-        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ4, onEachFeature : this.onEachFeature}).addTo(this.map);
+        L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ4, onEachFeature : this.onEachFeatureQ4}).addTo(this.map);
   }
+
+  onEachFeatureQ1(feature, layer) {
+    let npsValue = {};
+        npsValue['2016'] = feature.npsRegion['2016'] || { "Q1":{}};
+        npsValue['2016'] =  npsValue['2016'].Q1 || {};
+        npsValue['2015'] = feature.npsRegion['2015'] || { "Q1":{}};
+        npsValue['2015'] =  npsValue['2015'].Q1 || {};
+        npsValue['2014'] = feature.npsRegion['2014'] || { "Q1":{}};
+        npsValue['2014'] =  npsValue['2014'].Q1 || {};
+
+    if (npsValue['2016'].mean && npsValue['2015'].mean && npsValue['2014'].mean) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + '  </br> 2014 : ' + npsValue['2014'].mean + '</div');
+    }
+    else if ( npsValue['2016'].mean && npsValue['2015'].mean) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2016'].mean + ' </div>');
+    }
+    else {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
+    }
+    layer.on("mouseover", function (e) {
+      layer.openPopup(e.latlng);
+    });
+    layer.on("mouseout", function () {
+      layer.closePopup();
+    });
+  };
+
+  onEachFeatureQ2(feature, layer) {
+    let npsValue = {};
+        npsValue['2016'] = feature.npsRegion['2016'] || { "Q2":{}};
+        npsValue['2016'] =  npsValue['2016'].Q2 || {};
+        npsValue['2015'] = feature.npsRegion['2015'] || { "Q2":{}};
+        npsValue['2015'] =  npsValue['2015'].Q2 || {};
+        npsValue['2014'] = feature.npsRegion['2014'] || { "Q2":{}};
+        npsValue['2014'] =  npsValue['2014'].Q2 || {};
+
+    if (npsValue['2016'].mean && npsValue['2015'].mean && npsValue['2014'].mean) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + '  </br> 2014 : ' + npsValue['2014'].mean + '</div');
+    }
+    else if ( npsValue['2016'].mean && npsValue['2015'].mean) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2016'].mean + ' </div>');
+    }
+    else {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
+    }
+    layer.on("mouseover", function (e) {
+      layer.openPopup(e.latlng);
+    });
+    layer.on("mouseout", function () {
+      layer.closePopup();
+    });
+  };
+
+  onEachFeatureQ3(feature, layer) {
+    let npsValue = {};
+        npsValue['2016'] = feature.npsRegion['2016'] || { "Q3":{}};
+        npsValue['2016'] =  npsValue['2016'].Q3 || {};
+        npsValue['2015'] = feature.npsRegion['2015'] || { "Q3":{}};
+        npsValue['2015'] =  npsValue['2015'].Q3 || {};
+        npsValue['2014'] = feature.npsRegion['2014'] || { "Q3":{}};
+        npsValue['2014'] =  npsValue['2014'].Q3 || {};
+
+    if (npsValue['2016'].mean && npsValue['2015'].mean && npsValue['2014'].mean) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + '  </br> 2014 : ' + npsValue['2014'].mean + '</div');
+    }
+    else if ( npsValue['2016'].mean && npsValue['2015'].mean) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2016'].mean + ' </div>');
+    }
+    else {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
+    }
+    layer.on("mouseover", function (e) {
+      layer.openPopup(e.latlng);
+    });
+    layer.on("mouseout", function () {
+      layer.closePopup();
+    });
+  };
+
+  onEachFeatureQ4(feature, layer) {
+    let npsValue = {};
+        npsValue['2016'] = feature.npsRegion['2016'] || { "Q4":{}};
+        npsValue['2016'] =  npsValue['2016'].Q4 || {};
+        npsValue['2015'] = feature.npsRegion['2015'] || { "Q4":{}};
+        npsValue['2015'] =  npsValue['2015'].Q4 || {};
+        npsValue['2014'] = feature.npsRegion['2014'] || { "Q4":{}};
+        npsValue['2014'] =  npsValue['2014'].Q4 || {};
+
+    if (npsValue['2016'].mean && npsValue['2015'].mean && npsValue['2014'].mean) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + '  </br> 2014 : ' + npsValue['2014'].mean + '</div');
+    }
+    else if ( npsValue['2016'].mean && npsValue['2015'].mean) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2016'].mean + ' </div>');
+    }
+    else {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
+    }
+    layer.on("mouseover", function (e) {
+      layer.openPopup(e.latlng);
+    });
+    layer.on("mouseout", function () {
+      layer.closePopup();
+    });
+  };
 
 }
