@@ -17,7 +17,13 @@
     <li *ngIf="selectedYear" (click)="onQ4Select()"><a href="#">Q4 <span class="glyphicon glyphicon-chevron-right"></span></a></li>       
   </ul>
 
+<p class="title-canvas" *ngIf="isCanvas"> NPS Change rate</p>
  
+<canvas #myCanvas class="canvas-class" [hidden]="!isCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+
+<p class="top-value-class" *ngIf="isCanvas">{{npsObject.minMean}}</p>
+<p class="last-value-class" *ngIf="isCanvas">{{npsObject.maxMean}}</p>
+
  <div style="height: 500px" id="map"></div>
 
  

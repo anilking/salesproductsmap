@@ -19,6 +19,8 @@ export class MapComponent implements OnInit {
   public selectedRegion: string = "";
   public selectedYear: string = "";
   public isNpsRegions: boolean = false;
+  public npsObject: any = {};
+  public isCanvas: boolean = false;
 
   @ViewChild("myCanvas") myCanvas;
 
@@ -39,6 +41,16 @@ export class MapComponent implements OnInit {
     }).addTo(this.map);
   }
 
+  canvasInitialization(){
+    this.isCanvas = true;
+    const canvasEl: HTMLCanvasElement = this.myCanvas.nativeElement;
+    let ctx = canvasEl.getContext("2d");
+    var my_gradient = ctx.createLinearGradient(0, 0, 285, 0);
+    my_gradient.addColorStop(0, this.npsObject.minColor);
+    my_gradient.addColorStop(1, this.npsObject.maxColor);
+    ctx.fillStyle = my_gradient; 
+    ctx.fillRect(20, 20, 250, 25);
+  }
 
   countieStyle(feature) {
     return {
@@ -132,11 +144,18 @@ export class MapComponent implements OnInit {
   }
 
   onEachFeature(feature, layer) {
-    if (feature.npsRegion['2016'] && feature.npsRegion['2016'].mean && feature.npsRegion['2015'] && feature.npsRegion['2015'].mean && feature.npsRegion['2014'] && feature.npsRegion['2014'].mean) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + feature.npsRegion['2016'].mean + ' </br>' + '2015 : ' + feature.npsRegion['2015'].mean + '  </br> 2014 : ' + feature.npsRegion['2014'].mean + '</div');
+     let npsValue = {};
+        npsValue['2016'] = feature.npsRegion['2016'] || {};
+        npsValue['2015'] = feature.npsRegion['2015'] || {};
+        npsValue['2014'] = feature.npsRegion['2014'] || {};
+   if ( npsValue['2016'].mean && feature.selecredYear.indexOf('2016') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016-17 : ' + npsValue['2016'].mean + '</div>');
     }
-    else if (feature.npsRegion['2016'] && feature.npsRegion['2016'].mean && feature.npsRegion['2015'] && feature.npsRegion['2015'].mean) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + feature.npsRegion['2016'].mean + ' </br>' + '2015 : ' + feature.npsRegion['2015'].mean + ' </div>');
+    else if ( npsValue['2015'].mean && feature.selecredYear.indexOf('2015') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015-16 : ' + npsValue['2015'].mean + '</div>');
+    }
+    else if ( npsValue['2014'].mean && feature.selecredYear.indexOf('2014') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2014-15 : ' + npsValue['2014'].mean + '</div>');
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
@@ -153,6 +172,7 @@ export class MapComponent implements OnInit {
   regionChange(selectedRegion) {
     this.selectedRegion = selectedRegion;
     this.selectedYear = "";
+    this.isCanvas = false;
     let url = this.selectedRegion.toLocaleLowerCase() || "";
     if(url == "region"){
       url = "regional";
@@ -186,6 +206,7 @@ export class MapComponent implements OnInit {
         this.map.remove();
         this.mapInitialization();
         this.npsRegions = data || {};
+        this.isCanvas = false;
         for (let i in this.regionsData.features) {
           let feature: any = this.regionsData.features[i] || {};
           let properties = feature.properties || {};
@@ -208,6 +229,27 @@ export class MapComponent implements OnInit {
             this.regionsData.features[i].npsRegion["2015"] = {"Q1": {},"Q2":{},"Q3":{},"Q4":{}};
             this.regionsData.features[i].npsRegion["2014"] = {"Q1": {},"Q2":{},"Q3":{},"Q4":{}};
           }
+          this.regionsData.features[i].selecredYear = this.selectedYear;
+        }
+
+        let meanValues = this.regionsData.features.map(function(o){return o.npsRegion["2015"].mean;})
+        meanValues = meanValues.filter((mean) => mean != undefined);
+        let max = Math.max.apply(Math,meanValues);
+        let npsObject = this.regionsData.features.filter(function(o){return o.npsRegion["2015"].mean == max}) || [];
+        npsObject = npsObject[0] || {};
+        npsObject = npsObject.npsRegion || {};
+        this.npsObject.maxMean = Math.round(max);
+        this.npsObject.maxColor = npsObject.changeColor || "";
+        meanValues = this.regionsData.features.map(function(o){return o.npsRegion["2015"].mean;})
+        meanValues = meanValues.filter((mean) => mean != undefined);
+        let min = Math.min.apply(Math,meanValues);
+        npsObject = this.regionsData.features.filter(function(o){return o.npsRegion["2015"].mean == min}) || [];
+        npsObject = npsObject[0] || {};
+        npsObject = npsObject.npsRegion || {};
+        this.npsObject.minMean = Math.round(min);
+        this.npsObject.minColor = npsObject.changeColor || "";
+        if(this.npsObject.minColor && this.npsObject.maxColor){
+          this.canvasInitialization();
         }
         L.geoJSON(this.regionsData, { style: this.yearCountieStyle, onEachFeature : this.onEachFeature}).addTo(this.map);
       },
@@ -247,11 +289,15 @@ export class MapComponent implements OnInit {
         npsValue['2014'] = feature.npsRegion['2014'] || { "Q1":{}};
         npsValue['2014'] =  npsValue['2014'].Q1 || {};
 
-    if (npsValue['2016'].mean && npsValue['2015'].mean && npsValue['2014'].mean) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + '  </br> 2014 : ' + npsValue['2014'].mean + '</div');
+    
+    if ( npsValue['2016'].mean && feature.selecredYear.indexOf('2016') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016-17 : ' + npsValue['2016'].mean + '</div>');
     }
-    else if ( npsValue['2016'].mean && npsValue['2015'].mean) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2016'].mean + ' </div>');
+    else if ( npsValue['2015'].mean && feature.selecredYear.indexOf('2015') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015-16 : ' + npsValue['2015'].mean + '</div>');
+    }
+    else if ( npsValue['2014'].mean && feature.selecredYear.indexOf('2014') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2014-15 : ' + npsValue['2014'].mean + '</div>');
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
@@ -273,11 +319,14 @@ export class MapComponent implements OnInit {
         npsValue['2014'] = feature.npsRegion['2014'] || { "Q2":{}};
         npsValue['2014'] =  npsValue['2014'].Q2 || {};
 
-    if (npsValue['2016'].mean && npsValue['2015'].mean && npsValue['2014'].mean) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + '  </br> 2014 : ' + npsValue['2014'].mean + '</div');
+    if ( npsValue['2016'].mean && feature.selecredYear.indexOf('2016') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016-17 : ' + npsValue['2016'].mean + '</div>');
     }
-    else if ( npsValue['2016'].mean && npsValue['2015'].mean) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2016'].mean + ' </div>');
+    else if ( npsValue['2015'].mean && feature.selecredYear.indexOf('2015') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015-16 : ' + npsValue['2015'].mean + '</div>');
+    }
+    else if ( npsValue['2014'].mean && feature.selecredYear.indexOf('2014') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2014-15 : ' + npsValue['2014'].mean + '</div>');
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
@@ -299,11 +348,14 @@ export class MapComponent implements OnInit {
         npsValue['2014'] = feature.npsRegion['2014'] || { "Q3":{}};
         npsValue['2014'] =  npsValue['2014'].Q3 || {};
 
-    if (npsValue['2016'].mean && npsValue['2015'].mean && npsValue['2014'].mean) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + '  </br> 2014 : ' + npsValue['2014'].mean + '</div');
+    if ( npsValue['2016'].mean && feature.selecredYear.indexOf('2016') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016-17 : ' + npsValue['2016'].mean + '</div>');
     }
-    else if ( npsValue['2016'].mean && npsValue['2015'].mean) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2016'].mean + ' </div>');
+    else if ( npsValue['2015'].mean && feature.selecredYear.indexOf('2015') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015-16 : ' + npsValue['2015'].mean + '</div>');
+    }
+    else if ( npsValue['2014'].mean && feature.selecredYear.indexOf('2014') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2014-15 : ' + npsValue['2014'].mean + '</div>');
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
@@ -324,12 +376,14 @@ export class MapComponent implements OnInit {
         npsValue['2015'] =  npsValue['2015'].Q4 || {};
         npsValue['2014'] = feature.npsRegion['2014'] || { "Q4":{}};
         npsValue['2014'] =  npsValue['2014'].Q4 || {};
-
-    if (npsValue['2016'].mean && npsValue['2015'].mean && npsValue['2014'].mean) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + '  </br> 2014 : ' + npsValue['2014'].mean + '</div');
+    if ( npsValue['2016'].mean && feature.selecredYear.indexOf('2016') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016-17 : ' + npsValue['2016'].mean + '</div>');
     }
-    else if ( npsValue['2016'].mean && npsValue['2015'].mean) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2016'].mean + ' </div>');
+    else if ( npsValue['2015'].mean && feature.selecredYear.indexOf('2015') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015-16 : ' + npsValue['2015'].mean + '</div>');
+    }
+    else if ( npsValue['2014'].mean && feature.selecredYear.indexOf('2014') != -1) {
+      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2014-15 : ' + npsValue['2014'].mean + '</div>');
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
