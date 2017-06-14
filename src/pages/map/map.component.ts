@@ -46,9 +46,9 @@ export class MapComponent implements OnInit {
     const canvasEl: HTMLCanvasElement = this.myCanvas.nativeElement;
     let ctx = canvasEl.getContext("2d");
     var my_gradient = ctx.createLinearGradient(0, 0, 285, 0);
-    my_gradient.addColorStop(0, "#00cc00");
-    my_gradient.addColorStop(0.5, "#ffa500");
-    my_gradient.addColorStop(1, "#ff0000");
+    my_gradient.addColorStop(0, "#0000FF");
+    my_gradient.addColorStop(0.5, "#ffffff");
+    my_gradient.addColorStop(1, "#800080");
     ctx.fillStyle = my_gradient; 
     ctx.fillRect(20, 20, 250, 25);
   }
@@ -62,10 +62,10 @@ export class MapComponent implements OnInit {
   yearCountieStyle(feature) {
     if(feature.isNpsRegion){
         let styleObj =  {
-            fillColor: feature.npsRegion.change > 40 ? '#ff0000' :
-                       feature.npsRegion.change < -40  ? '#00cc00' :
-                       feature.npsRegion.change == undefined ? "#EEEEEE" :
-                                              '#ffa500',
+            fillColor: feature.npsRegion.Q1dt > 40 ? '#0000FF' :
+                       feature.npsRegion.Q1dt < -40  ? '#800080' :
+                       feature.npsRegion.Q1dt == undefined ? "#EEEEEE" :
+                                              '#ffffff',
             weight: 0,
             fillOpacity: 0.7
           };
@@ -82,10 +82,10 @@ export class MapComponent implements OnInit {
   countiesStyleBYQ1(feature) {
     if(feature.isNpsRegion){
         let styleObj =  {
-            fillColor: feature.npsRegion.Q1dt > 40 ? '#ff0000' :
-                       feature.npsRegion.Q1dt < -40  ? '#00cc00' :
+            fillColor: feature.npsRegion.Q1dt > 40 ? '#0000FF' :
+                       feature.npsRegion.Q1dt < -40  ? '#800080' :
                        feature.npsRegion.Q1dt == undefined ? "#EEEEEE" :
-                                              '#ffa500',
+                                              '#ffffff',
             weight: 0,
             fillOpacity: 0.7
           };
@@ -102,10 +102,10 @@ export class MapComponent implements OnInit {
   countiesStyleBYQ2(feature) {
     if(feature.isNpsRegion){
         let styleObj =  {
-            fillColor: feature.npsRegion.Q2dt > 40 ? '#ff0000' :
-                       feature.npsRegion.Q2dt < -40  ? '#00cc00' :
-                       feature.npsRegion.Q2dt == undefined ? "#EEEEEE" :
-                                              '#ffa500',
+            fillColor: feature.npsRegion.Q1dt > 40 ? '#0000FF' :
+                       feature.npsRegion.Q1dt < -40  ? '#800080' :
+                       feature.npsRegion.Q1dt == undefined ? "#EEEEEE" :
+                                              '#ffffff',
             weight: 0,
             fillOpacity: 0.7
           };
@@ -122,10 +122,10 @@ export class MapComponent implements OnInit {
   countiesStyleBYQ3(feature) {
     if(feature.isNpsRegion){
         let styleObj =  {
-            fillColor: feature.npsRegion.Q3dt > 40 ? '#ff0000' :
-                       feature.npsRegion.Q3dt < -40  ? '#00cc00' :
-                       feature.npsRegion.Q3dt == undefined ? "#EEEEEE" :
-                                              '#ffa500',
+            fillColor: feature.npsRegion.Q1dt > 40 ? '#0000FF' :
+                       feature.npsRegion.Q1dt < -40  ? '#800080' :
+                       feature.npsRegion.Q1dt == undefined ? "#EEEEEE" :
+                                              '#ffffff',
             weight: 0,
             fillOpacity: 0.7
           };
@@ -142,10 +142,10 @@ export class MapComponent implements OnInit {
   countiesStyleBYQ4(feature) {
     if(feature.isNpsRegion){
         let styleObj =  {
-            fillColor: feature.npsRegion.Q4dt > 40 ? '#ff0000' :
-                       feature.npsRegion.Q4dt < -40  ? '#00cc00' :
-                       feature.npsRegion.Q4dt == undefined ? "#EEEEEE" :
-                                              '#ffa500',
+            fillColor: feature.npsRegion.Q1dt > 40 ? '#0000FF' :
+                       feature.npsRegion.Q1dt < -40  ? '#800080' :
+                       feature.npsRegion.Q1dt == undefined ? "#EEEEEE" :
+                                              '#ffffff',
             weight: 0,
             fillOpacity: 0.7
           };
