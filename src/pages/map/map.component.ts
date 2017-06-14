@@ -64,7 +64,7 @@ export class MapComponent implements OnInit {
         let styleObj =  {
             fillColor: feature.npsRegion.Q1dt > 40 ? '#0000FF' :
                        feature.npsRegion.Q1dt < -40  ? '#800080' :
-                       feature.npsRegion.Q1dt == undefined ? "#EEEEEE" :
+                       feature.npsRegion.Q1dt == undefined ? "#000000" :
                                               '#ffffff',
             weight: 0,
             fillOpacity: 0.7
@@ -73,7 +73,9 @@ export class MapComponent implements OnInit {
     }
     else{
       let styleObj = {
-                        weight:0.3
+                        weight:0,
+                        fillColor: "#000000",
+                        fillOpacity: 0.8
                       };
        return styleObj;
     }
@@ -84,7 +86,7 @@ export class MapComponent implements OnInit {
         let styleObj =  {
             fillColor: feature.npsRegion.Q1dt > 40 ? '#0000FF' :
                        feature.npsRegion.Q1dt < -40  ? '#800080' :
-                       feature.npsRegion.Q1dt == undefined ? "#EEEEEE" :
+                       feature.npsRegion.Q1dt == undefined ? "#000000" :
                                               '#ffffff',
             weight: 0,
             fillOpacity: 0.7
@@ -93,7 +95,9 @@ export class MapComponent implements OnInit {
     }
     else{
       let styleObj = {
-                        weight:0.3
+                        weight:0,
+                        fillColor: "#000000",
+                        fillOpacity: 0.8
                       };
        return styleObj;
     }
@@ -104,7 +108,7 @@ export class MapComponent implements OnInit {
         let styleObj =  {
             fillColor: feature.npsRegion.Q1dt > 40 ? '#0000FF' :
                        feature.npsRegion.Q1dt < -40  ? '#800080' :
-                       feature.npsRegion.Q1dt == undefined ? "#EEEEEE" :
+                       feature.npsRegion.Q1dt == undefined ? "#000000" :
                                               '#ffffff',
             weight: 0,
             fillOpacity: 0.7
@@ -113,7 +117,9 @@ export class MapComponent implements OnInit {
     }
     else{
       let styleObj = {
-                        weight:0.3
+                        weight:0,
+                        fillColor: "#000000",
+                        fillOpacity: 0.8
                       };
        return styleObj;
     }
@@ -124,7 +130,7 @@ export class MapComponent implements OnInit {
         let styleObj =  {
             fillColor: feature.npsRegion.Q1dt > 40 ? '#0000FF' :
                        feature.npsRegion.Q1dt < -40  ? '#800080' :
-                       feature.npsRegion.Q1dt == undefined ? "#EEEEEE" :
+                       feature.npsRegion.Q1dt == undefined ? "#000000" :
                                               '#ffffff',
             weight: 0,
             fillOpacity: 0.7
@@ -133,7 +139,9 @@ export class MapComponent implements OnInit {
     }
     else{
       let styleObj = {
-                        weight:0.3
+                        weight:0,
+                        fillColor: "#000000",
+                        fillOpacity: 0.8
                       };
        return styleObj;
     }
@@ -144,7 +152,7 @@ export class MapComponent implements OnInit {
         let styleObj =  {
             fillColor: feature.npsRegion.Q1dt > 40 ? '#0000FF' :
                        feature.npsRegion.Q1dt < -40  ? '#800080' :
-                       feature.npsRegion.Q1dt == undefined ? "#EEEEEE" :
+                       feature.npsRegion.Q1dt == undefined ? "#000000" :
                                               '#ffffff',
             weight: 0,
             fillOpacity: 0.7
@@ -153,8 +161,10 @@ export class MapComponent implements OnInit {
     }
     else{
       let styleObj = {
-              weight:0.3
-            };
+                        weight:0,
+                        fillColor: "#000000",
+                        fillOpacity: 0.8
+                      };
        return styleObj;
     }
   }

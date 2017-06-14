@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" *ngIf="isChrome">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Sales Order Streaming Dashboard</a>
@@ -7,13 +7,13 @@
 </nav>
 
 
-<div class="container">
+<div class="container" *ngIf="isChrome">
   <app-map></app-map>
 </div>
 
 
 
-<nav class="navbar navbar-inverse navbar-fixed-bottom">
+<nav class="navbar navbar-inverse navbar-fixed-bottom" *ngIf="isChrome">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand">Sales Order Streaming Dashboard</a>

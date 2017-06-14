@@ -18,6 +18,9 @@
   </ul>
 
 <p class="title-canvas" *ngIf="isCanvas"> NPS Change rate</p>
+
+<div class="foo black" *ngIf="isCanvas"></div>
+<div class="no-data-divclass" *ngIf="isCanvas"> No data available</div>
  
 <canvas #myCanvas class="canvas-class" [hidden]="!isCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
 
