@@ -11,16 +11,16 @@
         <li *ngFor="let year of yearsList" (click)="yearChange(year)"><a href="#">{{year}}</a></li>                      
       </ul>
     </li>
-    <li *ngIf="selectedYear" (click)="onQ1Select()"><a href="#">Q1 <span class="glyphicon glyphicon-chevron-right"></span></a></li>
-    <li *ngIf="selectedYear" (click)="onQ2Select()"><a href="#">Q2 <span class="glyphicon glyphicon-chevron-right"></span></a></li>
-    <li *ngIf="selectedYear" (click)="onQ3Select()"><a href="#">Q3 <span class="glyphicon glyphicon-chevron-right"></span></a></li>
-    <li *ngIf="selectedYear" (click)="onQ4Select()"><a href="#">Q4 <span class="glyphicon glyphicon-chevron-right"></span></a></li>       
+    <li *ngIf="selectedYear" [class.special]="selectedTab == 'Q1'" (click)="onQ1Select()"><a href="#">Q1 <span class="glyphicon glyphicon-chevron-right"></span></a></li>
+    <li *ngIf="selectedYear" [class.special]="selectedTab == 'Q2'" (click)="onQ2Select()"><a href="#">Q2 <span class="glyphicon glyphicon-chevron-right"></span></a></li>
+    <li *ngIf="selectedYear" [class.special]="selectedTab == 'Q3'" (click)="onQ3Select()"><a href="#">Q3 <span class="glyphicon glyphicon-chevron-right"></span></a></li>
+    <li *ngIf="selectedYear" [class.special]="selectedTab == 'Q4'" (click)="onQ4Select()"><a href="#">Q4 <span class="glyphicon glyphicon-chevron-right"></span></a></li>       
   </ul>
 
 <p class="title-canvas" *ngIf="isCanvas"> NPS Change rate</p>
 
-<div class="foo black" *ngIf="isCanvas"></div>
-<div class="no-data-divclass" *ngIf="isCanvas"> No data available</div>
+<div class="foo black" *ngIf="selectedYear"></div>
+<div class="no-data-divclass" *ngIf="selectedYear"> No data available</div>
  
 <canvas #myCanvas class="canvas-class" [hidden]="!isCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
 

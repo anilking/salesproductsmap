@@ -11,6 +11,10 @@
   <app-map></app-map>
 </div>
 
+<div class="container browser-message" *ngIf="!isChrome">
+        <p>Only Chrome browser is supported!</p>
+</div>
+
 
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom" *ngIf="isChrome">

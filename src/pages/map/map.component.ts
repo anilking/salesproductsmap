@@ -21,6 +21,7 @@ export class MapComponent implements OnInit {
   public isNpsRegions: boolean = false;
   public npsObject: any = {};
   public isCanvas: boolean = false;
+  public selectedTab: string = "";
 
   @ViewChild("myCanvas") myCanvas;
 
@@ -174,14 +175,34 @@ export class MapComponent implements OnInit {
         npsValue['2016'] = feature.npsRegion['2016'] || {};
         npsValue['2015'] = feature.npsRegion['2015'] || {};
         npsValue['2014'] = feature.npsRegion['2014'] || {};
-   if ( npsValue['2016'].mean && feature.selecredYear.indexOf('2017') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2017-16 : ' + npsValue['2016'].mean + '</div>');
+
+   if ( (npsValue['2016'].mean || npsValue['2016'].mean == 0.0) && (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+        let diff = npsValue['2016'].mean - npsValue['2015'].mean;
+        let icon = "";
+        if(diff > 0){
+            icon = 'glyphicon-arrow-up';
+        }
+        else{
+            icon = 'glyphicon-arrow-down';
+        }
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + ' </br>' + 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');      
     }
-    else if ( npsValue['2015'].mean && feature.selecredYear.indexOf('2016') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016-15 : ' + npsValue['2015'].mean + '</div>');
+    else if( (npsValue['2016'].mean || npsValue['2016'].mean == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean +  '</div');      
     }
-    else if ( npsValue['2014'].mean && feature.selecredYear.indexOf('2015') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015-14 : ' + npsValue['2014'].mean + '</div>');
+    else if ( (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && (npsValue['2014'].mean || npsValue['2014'].mean == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+        let diff = npsValue['2015'].mean - npsValue['2014'].mean;
+        let icon = "";
+        if(diff > 0){
+            icon = 'glyphicon-arrow-up';
+        }
+        else{
+            icon = 'glyphicon-arrow-down';
+        }
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015 : ' + npsValue['2015'].mean + ' </br>' + '2014 : ' + npsValue['2014'].mean + ' </br>' + 'Diff : ' + diff.toFixed(3) + '<span class="glyphicon ' + icon +  '"> </div');      
+    }
+    else if( (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015 : ' + npsValue['2015'].mean +  '</div');      
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
@@ -283,6 +304,7 @@ export class MapComponent implements OnInit {
   }
 
   onQ1Select(){
+        this.selectedTab = "Q1";
         this.map.remove();
         this.mapInitialization();
         this.isCanvas = false;
@@ -305,6 +327,7 @@ export class MapComponent implements OnInit {
         L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ1, onEachFeature : this.onEachFeatureQ1}).addTo(this.map);
   }
   onQ2Select(){
+        this.selectedTab = "Q2";
         this.map.remove();
         this.mapInitialization();
         this.isCanvas = false;
@@ -327,6 +350,7 @@ export class MapComponent implements OnInit {
         L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ2, onEachFeature : this.onEachFeatureQ2}).addTo(this.map);
   }
   onQ3Select(){
+        this.selectedTab = "Q3";
         this.map.remove();
         this.mapInitialization();
         this.isCanvas = false;
@@ -349,6 +373,7 @@ export class MapComponent implements OnInit {
         L.geoJSON(this.regionsData, { style: this.countiesStyleBYQ3, onEachFeature : this.onEachFeatureQ3}).addTo(this.map);
   }
   onQ4Select(){
+        this.selectedTab = "Q4";
         this.map.remove();
         this.mapInitialization();
         this.isCanvas = false;
@@ -379,14 +404,34 @@ export class MapComponent implements OnInit {
         npsValue['2015'] =  npsValue['2015'].Q1 || {};
         npsValue['2014'] = feature.npsRegion['2014'] || { "Q1":{}};
         npsValue['2014'] =  npsValue['2014'].Q1 || {};
-    if ( npsValue['2016'].mean && feature.selecredYear.indexOf('2017') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2017-16 : ' + npsValue['2016'].mean + '</div>');
+    
+    if ( (npsValue['2016'].mean || npsValue['2016'].mean == 0.0) && (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+        let diff = npsValue['2016'].mean - npsValue['2015'].mean;
+        let icon = "";
+        if(diff > 0){
+            icon = 'glyphicon-arrow-up';
+        }
+        else{
+            icon = 'glyphicon-arrow-down';
+        }
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + ' </br>' + 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');      
     }
-    else if ( npsValue['2015'].mean && feature.selecredYear.indexOf('2016') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016-15 : ' + npsValue['2015'].mean + '</div>');
+    else if( (npsValue['2016'].mean || npsValue['2016'].mean == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean +  '</div');      
     }
-    else if ( npsValue['2014'].mean && feature.selecredYear.indexOf('2015') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015-14 : ' + npsValue['2014'].mean + '</div>');
+    else if ( (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && (npsValue['2014'].mean || npsValue['2014'].mean == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+        let diff = npsValue['2015'].mean - npsValue['2014'].mean;
+        let icon = "";
+        if(diff > 0){
+            icon = 'glyphicon-arrow-up';
+        }
+        else{
+            icon = 'glyphicon-arrow-down';
+        }
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015 : ' + npsValue['2015'].mean + ' </br>' + '2014 : ' + npsValue['2014'].mean + ' </br>' + 'Diff : ' + diff.toFixed(3) + '<span class="glyphicon ' + icon +  '"> </div');      
+    }
+    else if( (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015 : ' + npsValue['2015'].mean +  '</div');      
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
@@ -408,14 +453,33 @@ export class MapComponent implements OnInit {
         npsValue['2014'] = feature.npsRegion['2014'] || { "Q2":{}};
         npsValue['2014'] =  npsValue['2014'].Q2 || {};
 
-    if ( npsValue['2016'].mean && feature.selecredYear.indexOf('2017') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2017-16 : ' + npsValue['2016'].mean + '</div>');
+    if ( (npsValue['2016'].mean || npsValue['2016'].mean == 0.0) && (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+        let diff = npsValue['2016'].mean - npsValue['2015'].mean;
+        let icon = "";
+        if(diff > 0){
+            icon = 'glyphicon-arrow-up';
+        }
+        else{
+            icon = 'glyphicon-arrow-down';
+        }
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + ' </br>' + 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');      
     }
-    else if ( npsValue['2015'].mean && feature.selecredYear.indexOf('2016') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016-15 : ' + npsValue['2015'].mean + '</div>');
+    else if( (npsValue['2016'].mean || npsValue['2016'].mean == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean +  '</div');      
     }
-    else if ( npsValue['2014'].mean && feature.selecredYear.indexOf('2015') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015-14 : ' + npsValue['2014'].mean + '</div>');
+    else if ( (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && (npsValue['2014'].mean || npsValue['2014'].mean == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+        let diff = npsValue['2015'].mean - npsValue['2014'].mean;
+        let icon = "";
+        if(diff > 0){
+            icon = 'glyphicon-arrow-up';
+        }
+        else{
+            icon = 'glyphicon-arrow-down';
+        }
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015 : ' + npsValue['2015'].mean + ' </br>' + '2014 : ' + npsValue['2014'].mean + ' </br>' + 'Diff : ' + diff.toFixed(3) + '<span class="glyphicon ' + icon +  '"> </div');      
+    }
+    else if( (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015 : ' + npsValue['2015'].mean +  '</div');      
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
@@ -437,14 +501,33 @@ export class MapComponent implements OnInit {
         npsValue['2014'] = feature.npsRegion['2014'] || { "Q3":{}};
         npsValue['2014'] =  npsValue['2014'].Q3 || {};
 
-    if ( npsValue['2016'].mean && feature.selecredYear.indexOf('2017') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2017-16 : ' + npsValue['2016'].mean + '</div>');
+    if ( (npsValue['2016'].mean || npsValue['2016'].mean == 0.0) && (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+        let diff = npsValue['2016'].mean - npsValue['2015'].mean;
+        let icon = "";
+        if(diff > 0){
+            icon = 'glyphicon-arrow-up';
+        }
+        else{
+            icon = 'glyphicon-arrow-down';
+        }
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + ' </br>' + 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');      
     }
-    else if ( npsValue['2015'].mean && feature.selecredYear.indexOf('2016') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016-15 : ' + npsValue['2015'].mean + '</div>');
+    else if( (npsValue['2016'].mean || npsValue['2016'].mean == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean +  '</div');      
     }
-    else if ( npsValue['2014'].mean && feature.selecredYear.indexOf('2015') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015-14 : ' + npsValue['2014'].mean + '</div>');
+    else if ( (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && (npsValue['2014'].mean || npsValue['2014'].mean == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+        let diff = npsValue['2015'].mean - npsValue['2014'].mean;
+        let icon = "";
+        if(diff > 0){
+            icon = 'glyphicon-arrow-up';
+        }
+        else{
+            icon = 'glyphicon-arrow-down';
+        }
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015 : ' + npsValue['2015'].mean + ' </br>' + '2014 : ' + npsValue['2014'].mean + ' </br>' + 'Diff : ' + diff.toFixed(3) + '<span class="glyphicon ' + icon +  '"> </div');      
+    }
+    else if( (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015 : ' + npsValue['2015'].mean +  '</div');      
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
@@ -465,14 +548,34 @@ export class MapComponent implements OnInit {
         npsValue['2015'] =  npsValue['2015'].Q4 || {};
         npsValue['2014'] = feature.npsRegion['2014'] || { "Q4":{}};
         npsValue['2014'] =  npsValue['2014'].Q4 || {};
-    if ( npsValue['2016'].mean && feature.selecredYear.indexOf('2017') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2017-16 : ' + npsValue['2016'].mean + '</div>');
+    
+    if ( (npsValue['2016'].mean || npsValue['2016'].mean == 0.0) && (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+        let diff = npsValue['2016'].mean - npsValue['2015'].mean;
+        let icon = "";
+        if(diff > 0){
+            icon = 'glyphicon-arrow-up';
+        }
+        else{
+            icon = 'glyphicon-arrow-down';
+        }
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean + ' </br>' + '2015 : ' + npsValue['2015'].mean + ' </br>' + 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');      
     }
-    else if ( npsValue['2015'].mean && feature.selecredYear.indexOf('2016') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016-15 : ' + npsValue['2015'].mean + '</div>');
+    else if( (npsValue['2016'].mean || npsValue['2016'].mean == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2016 : ' + npsValue['2016'].mean +  '</div');      
     }
-    else if ( npsValue['2014'].mean && feature.selecredYear.indexOf('2015') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015-14 : ' + npsValue['2014'].mean + '</div>');
+    else if ( (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && (npsValue['2014'].mean || npsValue['2014'].mean == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+        let diff = npsValue['2015'].mean - npsValue['2014'].mean;
+        let icon = "";
+        if(diff > 0){
+            icon = 'glyphicon-arrow-up';
+        }
+        else{
+            icon = 'glyphicon-arrow-down';
+        }
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015 : ' + npsValue['2015'].mean + ' </br>' + '2014 : ' + npsValue['2014'].mean + ' </br>' + 'Diff : ' + diff.toFixed(3) + '<span class="glyphicon ' + icon +  '"> </div');      
+    }
+    else if( (npsValue['2015'].mean || npsValue['2015'].mean == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+        layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </br>' + '2015 : ' + npsValue['2015'].mean +  '</div');      
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_name + '</b> </div>');
