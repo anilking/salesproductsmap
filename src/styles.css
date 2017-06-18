@@ -6,3 +6,8 @@
           font: 14px/16px Arial, Helvetica, sans-serif;
           line-height: 25px;
       }
+
+.table>tbody>tr>td, .table>tbody>tr>th {
+    padding: 4px;
+    text-align: center;
+}

@@ -310,7 +310,8 @@ export class MapComponent implements OnInit {
     npsValue['2014'] = feature.npsRegion['2014'] || {};
 
     if ( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
-      let diff = npsValue['2016'].NPS - npsValue['2015'].NPS;
+      let diff: any = npsValue['2016'].NPS - npsValue['2015'].NPS;
+          diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
         icon = 'glyphicon-arrow-up';
@@ -318,13 +319,61 @@ export class MapComponent implements OnInit {
       else{
         icon = 'glyphicon-arrow-down';
       }
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2016 Nps:' + npsValue['2016'].NPS + ' </br>'+ '2016 Number:' + npsValue['2016'].N + ' </br>' + '2015 Nps: ' + npsValue['2015'].NPS + ' </br>' +'2015 Number:' + npsValue['2015'].N + ' </br>'+ 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2016</td>
+                <td>${npsValue['2016'].NPS}</td>
+                <td>${npsValue['2016'].N}</td>
+              </tr>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+              <tr>
+                <td>Diff</td>
+                <td colspan="2">${diff} <span class="glyphicon  ${icon} "></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2016 Nps: ' + npsValue['2016'].NPS + ' </br>'+ '2016 Number:' + npsValue['2016'].N + '</div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2016</td>
+                <td>${npsValue['2016'].NPS}</td>
+                <td>${npsValue['2016'].N}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if ( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && (npsValue['2014'].NPS || npsValue['2014'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
-      let diff = npsValue['2015'].NPS - npsValue['2014'].NPS;
+      let diff: any = npsValue['2015'].NPS - npsValue['2014'].NPS;
+           diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
         icon = 'glyphicon-arrow-up';
@@ -333,14 +382,57 @@ export class MapComponent implements OnInit {
         icon = 'glyphicon-arrow-down';
       }
 
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 Nps:' + npsValue['2015'].NPS + ' </br>'+ '2015 Number:' + npsValue['2015'].N + ' </br>' + '2014 Nps: ' + npsValue['2014'].NPS + ' </br>' +'2014 Number:' + npsValue['2014'].N + ' </br>'+ 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');
-
-   //   layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 : ' + npsValue['2015'].NPS + ' </br>' + '2014 : ' + npsValue['2014'].NPS + ' </br>' + 'Diff : ' + diff.toFixed(3) + '<span class="glyphicon ' + icon +  '"> </div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+              <tr>
+                <td>2014</td>
+                <td>${npsValue['2014'].NPS}</td>
+                <td>${npsValue['2014'].N}</td>
+              </tr>
+              <tr>
+                <td>Diff</td>
+                <td colspan="2">${diff} <span class="glyphicon  ${icon} "></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 Nps: ' + npsValue['2015'].NPS + ' </br>'+ '2015 Number:' + npsValue['2015'].N + '</div');
-
-      //layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 : ' + npsValue['2015'].NPS +  '</div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </div>');
@@ -546,7 +638,8 @@ export class MapComponent implements OnInit {
     npsValue['2014'] =  npsValue['2014'].Q1 || {};
 
     if ( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
-      let diff = npsValue['2016'].NPS - npsValue['2015'].NPS;
+      let diff: any = npsValue['2016'].NPS - npsValue['2015'].NPS;
+          diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
         icon = 'glyphicon-arrow-up';
@@ -554,13 +647,61 @@ export class MapComponent implements OnInit {
       else{
         icon = 'glyphicon-arrow-down';
       }
-    //         layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2016 Nps:' + npsValue['2016'].NPS + ' </br>'+ '2016 Number:' + npsValue['2016'].N + ' </br>' + '2015 Nps: ' + npsValue['2015'].NPS + ' </br>' +'2015 Number:' + npsValue['2015'].N + ' </br>'+ 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2016</td>
+                <td>${npsValue['2016'].NPS}</td>
+                <td>${npsValue['2016'].N}</td>
+              </tr>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+              <tr>
+                <td>Diff</td>
+                <td colspan="2">${diff} <span class="glyphicon  ${icon} "></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2016 Nps: ' + npsValue['2016'].NPS + ' </br>'+ '2016 Number:' + npsValue['2016'].N + '</div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2016</td>
+                <td>${npsValue['2016'].NPS}</td>
+                <td>${npsValue['2016'].N}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if ( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && (npsValue['2014'].NPS || npsValue['2014'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
-      let diff = npsValue['2015'].NPS - npsValue['2014'].NPS;
+      let diff: any = npsValue['2015'].NPS - npsValue['2014'].NPS;
+           diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
         icon = 'glyphicon-arrow-up';
@@ -569,14 +710,57 @@ export class MapComponent implements OnInit {
         icon = 'glyphicon-arrow-down';
       }
 
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 Nps:' + npsValue['2015'].NPS + ' </br>'+ '2015 Number:' + npsValue['2015'].N + ' </br>' + '2014 Nps: ' + npsValue['2014'].NPS + ' </br>' +'2014 Number:' + npsValue['2014'].N + ' </br>'+ 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');
-
-      //   layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 : ' + npsValue['2015'].NPS + ' </br>' + '2014 : ' + npsValue['2014'].NPS + ' </br>' + 'Diff : ' + diff.toFixed(3) + '<span class="glyphicon ' + icon +  '"> </div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+              <tr>
+                <td>2014</td>
+                <td>${npsValue['2014'].NPS}</td>
+                <td>${npsValue['2014'].N}</td>
+              </tr>
+              <tr>
+                <td>Diff</td>
+                <td colspan="2">${diff} <span class="glyphicon  ${icon} "></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 Nps: ' + npsValue['2015'].NPS + ' </br>'+ '2015 Number:' + npsValue['2015'].N + '</div');
-
-      //layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 : ' + npsValue['2015'].NPS +  '</div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </div>');
@@ -599,7 +783,8 @@ export class MapComponent implements OnInit {
     npsValue['2014'] =  npsValue['2014'].Q2 || {};
 
     if ( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
-      let diff = npsValue['2016'].NPS - npsValue['2015'].NPS;
+      let diff: any = npsValue['2016'].NPS - npsValue['2015'].NPS;
+          diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
         icon = 'glyphicon-arrow-up';
@@ -607,13 +792,61 @@ export class MapComponent implements OnInit {
       else{
         icon = 'glyphicon-arrow-down';
       }
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2016 Nps:' + npsValue['2016'].NPS + ' </br>'+ '2016 Number:' + npsValue['2016'].N + ' </br>' + '2015 Nps: ' + npsValue['2015'].NPS + ' </br>' +'2015 Number:' + npsValue['2015'].N + ' </br>'+ 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2016</td>
+                <td>${npsValue['2016'].NPS}</td>
+                <td>${npsValue['2016'].N}</td>
+              </tr>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+              <tr>
+                <td>Diff</td>
+                <td colspan="2">${diff} <span class="glyphicon  ${icon} "></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2016 Nps: ' + npsValue['2016'].NPS + ' </br>'+ '2016 Number:' + npsValue['2016'].N + '</div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2016</td>
+                <td>${npsValue['2016'].NPS}</td>
+                <td>${npsValue['2016'].N}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if ( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && (npsValue['2014'].NPS || npsValue['2014'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
-      let diff = npsValue['2015'].NPS - npsValue['2014'].NPS;
+      let diff: any = npsValue['2015'].NPS - npsValue['2014'].NPS;
+           diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
         icon = 'glyphicon-arrow-up';
@@ -622,14 +855,57 @@ export class MapComponent implements OnInit {
         icon = 'glyphicon-arrow-down';
       }
 
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 Nps:' + npsValue['2015'].NPS + ' </br>'+ '2015 Number:' + npsValue['2015'].N + ' </br>' + '2014 Nps: ' + npsValue['2014'].NPS + ' </br>' +'2014 Number:' + npsValue['2014'].N + ' </br>'+ 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');
-
-      //   layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 : ' + npsValue['2015'].NPS + ' </br>' + '2014 : ' + npsValue['2014'].NPS + ' </br>' + 'Diff : ' + diff.toFixed(3) + '<span class="glyphicon ' + icon +  '"> </div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+              <tr>
+                <td>2014</td>
+                <td>${npsValue['2014'].NPS}</td>
+                <td>${npsValue['2014'].N}</td>
+              </tr>
+              <tr>
+                <td>Diff</td>
+                <td colspan="2">${diff} <span class="glyphicon  ${icon} "></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 Nps: ' + npsValue['2015'].NPS + ' </br>'+ '2015 Number:' + npsValue['2015'].N + '</div');
-
-      //layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 : ' + npsValue['2015'].NPS +  '</div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </div>');
@@ -652,7 +928,8 @@ export class MapComponent implements OnInit {
     npsValue['2014'] =  npsValue['2014'].Q3 || {};
 
     if ( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
-      let diff = npsValue['2016'].NPS - npsValue['2015'].NPS;
+      let diff: any = npsValue['2016'].NPS - npsValue['2015'].NPS;
+          diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
         icon = 'glyphicon-arrow-up';
@@ -660,13 +937,61 @@ export class MapComponent implements OnInit {
       else{
         icon = 'glyphicon-arrow-down';
       }
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2016 Nps:' + npsValue['2016'].NPS + ' </br>'+ '2016 Number:' + npsValue['2016'].N + ' </br>' + '2015 Nps: ' + npsValue['2015'].NPS + ' </br>' +'2015 Number:' + npsValue['2015'].N + ' </br>'+ 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2016</td>
+                <td>${npsValue['2016'].NPS}</td>
+                <td>${npsValue['2016'].N}</td>
+              </tr>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+              <tr>
+                <td>Diff</td>
+                <td colspan="2">${diff} <span class="glyphicon  ${icon} "></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2016 Nps: ' + npsValue['2016'].NPS + ' </br>'+ '2016 Number:' + npsValue['2016'].N + '</div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2016</td>
+                <td>${npsValue['2016'].NPS}</td>
+                <td>${npsValue['2016'].N}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if ( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && (npsValue['2014'].NPS || npsValue['2014'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
-      let diff = npsValue['2015'].NPS - npsValue['2014'].NPS;
+      let diff: any = npsValue['2015'].NPS - npsValue['2014'].NPS;
+           diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
         icon = 'glyphicon-arrow-up';
@@ -675,14 +1000,57 @@ export class MapComponent implements OnInit {
         icon = 'glyphicon-arrow-down';
       }
 
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 Nps:' + npsValue['2015'].NPS + ' </br>'+ '2015 Number:' + npsValue['2015'].N + ' </br>' + '2014 Nps: ' + npsValue['2014'].NPS + ' </br>' +'2014 Number:' + npsValue['2014'].N + ' </br>'+ 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');
-
-      //   layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 : ' + npsValue['2015'].NPS + ' </br>' + '2014 : ' + npsValue['2014'].NPS + ' </br>' + 'Diff : ' + diff.toFixed(3) + '<span class="glyphicon ' + icon +  '"> </div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+              <tr>
+                <td>2014</td>
+                <td>${npsValue['2014'].NPS}</td>
+                <td>${npsValue['2014'].N}</td>
+              </tr>
+              <tr>
+                <td>Diff</td>
+                <td colspan="2">${diff} <span class="glyphicon  ${icon} "></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 Nps: ' + npsValue['2015'].NPS + ' </br>'+ '2015 Number:' + npsValue['2015'].N + '</div');
-
-      //layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 : ' + npsValue['2015'].NPS +  '</div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </div>');
@@ -705,7 +1073,8 @@ export class MapComponent implements OnInit {
     npsValue['2014'] =  npsValue['2014'].Q4 || {};
 
     if ( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
-      let diff = npsValue['2016'].NPS - npsValue['2015'].NPS;
+      let diff: any = npsValue['2016'].NPS - npsValue['2015'].NPS;
+          diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
         icon = 'glyphicon-arrow-up';
@@ -713,13 +1082,61 @@ export class MapComponent implements OnInit {
       else{
         icon = 'glyphicon-arrow-down';
       }
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2016 Nps:' + npsValue['2016'].NPS + ' </br>'+ '2016 Number:' + npsValue['2016'].N + ' </br>' + '2015 Nps: ' + npsValue['2015'].NPS + ' </br>' +'2015 Number:' + npsValue['2015'].N + ' </br>'+ 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2016</td>
+                <td>${npsValue['2016'].NPS}</td>
+                <td>${npsValue['2016'].N}</td>
+              </tr>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+              <tr>
+                <td>Diff</td>
+                <td colspan="2">${diff} <span class="glyphicon  ${icon} "></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2016 Nps: ' + npsValue['2016'].NPS + ' </br>'+ '2016 Number:' + npsValue['2016'].N + '</div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2016</td>
+                <td>${npsValue['2016'].NPS}</td>
+                <td>${npsValue['2016'].N}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if ( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && (npsValue['2014'].NPS || npsValue['2014'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
-      let diff = npsValue['2015'].NPS - npsValue['2014'].NPS;
+      let diff: any = npsValue['2015'].NPS - npsValue['2014'].NPS;
+           diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
         icon = 'glyphicon-arrow-up';
@@ -728,14 +1145,57 @@ export class MapComponent implements OnInit {
         icon = 'glyphicon-arrow-down';
       }
 
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 Nps:' + npsValue['2015'].NPS + ' </br>'+ '2015 Number:' + npsValue['2015'].N + ' </br>' + '2014 Nps: ' + npsValue['2014'].NPS + ' </br>' +'2014 Number:' + npsValue['2014'].N + ' </br>'+ 'Diff : ' + diff.toFixed(3)  + '<span class="glyphicon ' + icon +  '"> </div');
-
-      //   layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 : ' + npsValue['2015'].NPS + ' </br>' + '2014 : ' + npsValue['2014'].NPS + ' </br>' + 'Diff : ' + diff.toFixed(3) + '<span class="glyphicon ' + icon +  '"> </div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+              <tr>
+                <td>2014</td>
+                <td>${npsValue['2014'].NPS}</td>
+                <td>${npsValue['2014'].N}</td>
+              </tr>
+              <tr>
+                <td>Diff</td>
+                <td colspan="2">${diff} <span class="glyphicon  ${icon} "></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
-      layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 Nps: ' + npsValue['2015'].NPS + ' </br>'+ '2015 Number:' + npsValue['2015'].N + '</div');
-
-      //layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </br>' + '2015 : ' + npsValue['2015'].NPS +  '</div');
+      layer.bindPopup(`<div>
+          <h4>${feature.properties.dsm_id}</h2>            
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th>NPS</th>
+                <th>NUMBERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2015</td>
+                <td>${npsValue['2015'].NPS}</td>
+                <td>${npsValue['2015'].N}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `);
     }
     else {
       layer.bindPopup('<div class="info-div"> <b>' + feature.properties.dsm_id + '</b> </div>');
