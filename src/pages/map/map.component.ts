@@ -255,6 +255,7 @@ export class MapComponent implements OnInit {
   }
 
   countiesStyleBYQ4(feature) {
+    console.log(feature);    
     if(feature.isNpsRegion){
       let npsValue = {};
       let diff = 0;
@@ -310,6 +311,8 @@ export class MapComponent implements OnInit {
     npsValue['2014'] = feature.npsRegion['2014'] || {};
 
     if ( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+      npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       let diff: any = npsValue['2016'].NPS - npsValue['2015'].NPS;
           diff = Math.round(diff);
       let icon = "";
@@ -350,6 +353,7 @@ export class MapComponent implements OnInit {
       `);
     }
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+      npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
       layer.bindPopup(`<div>
           <h4>${feature.properties.dsm_id}</h2>            
           <table class="table table-hover">
@@ -372,6 +376,8 @@ export class MapComponent implements OnInit {
       `);
     }
     else if ( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && (npsValue['2014'].NPS || npsValue['2014'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+      npsValue['2014'].NPS = Math.round(npsValue['2014'].NPS);
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       let diff: any = npsValue['2015'].NPS - npsValue['2014'].NPS;
            diff = Math.round(diff);
       let icon = "";
@@ -413,6 +419,7 @@ export class MapComponent implements OnInit {
       `);
     }
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       layer.bindPopup(`<div>
           <h4>${feature.properties.dsm_id}</h2>            
           <table class="table table-hover">
@@ -497,6 +504,7 @@ export class MapComponent implements OnInit {
             }
             else{
               npsRegion = this.npsRegions[properties.dsm_id] || {};
+              console.log(npsRegion);
             }
             if (npsRegion.change) {
               this.regionsData.features[i].npsRegion = npsRegion || {};
@@ -638,7 +646,9 @@ export class MapComponent implements OnInit {
     npsValue['2014'] =  npsValue['2014'].Q1 || {};
 
     if ( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
-      let diff: any = npsValue['2016'].NPS - npsValue['2015'].NPS;
+      npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
+    let diff: any = npsValue['2016'].NPS - npsValue['2015'].NPS;
           diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
@@ -678,6 +688,7 @@ export class MapComponent implements OnInit {
       `);
     }
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+      npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
       layer.bindPopup(`<div>
           <h4>${feature.properties.dsm_id}</h2>            
           <table class="table table-hover">
@@ -700,6 +711,8 @@ export class MapComponent implements OnInit {
       `);
     }
     else if ( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && (npsValue['2014'].NPS || npsValue['2014'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+      npsValue['2014'].NPS = Math.round(npsValue['2014'].NPS);
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       let diff: any = npsValue['2015'].NPS - npsValue['2014'].NPS;
            diff = Math.round(diff);
       let icon = "";
@@ -741,6 +754,7 @@ export class MapComponent implements OnInit {
       `);
     }
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       layer.bindPopup(`<div>
           <h4>${feature.properties.dsm_id}</h2>            
           <table class="table table-hover">
@@ -783,6 +797,8 @@ export class MapComponent implements OnInit {
     npsValue['2014'] =  npsValue['2014'].Q2 || {};
 
     if ( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+      npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       let diff: any = npsValue['2016'].NPS - npsValue['2015'].NPS;
           diff = Math.round(diff);
       let icon = "";
@@ -823,6 +839,7 @@ export class MapComponent implements OnInit {
       `);
     }
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+      npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
       layer.bindPopup(`<div>
           <h4>${feature.properties.dsm_id}</h2>            
           <table class="table table-hover">
@@ -845,6 +862,8 @@ export class MapComponent implements OnInit {
       `);
     }
     else if ( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && (npsValue['2014'].NPS || npsValue['2014'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+      npsValue['2014'].NPS = Math.round(npsValue['2014'].NPS);
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       let diff: any = npsValue['2015'].NPS - npsValue['2014'].NPS;
            diff = Math.round(diff);
       let icon = "";
@@ -886,6 +905,7 @@ export class MapComponent implements OnInit {
       `);
     }
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       layer.bindPopup(`<div>
           <h4>${feature.properties.dsm_id}</h2>            
           <table class="table table-hover">
@@ -928,6 +948,8 @@ export class MapComponent implements OnInit {
     npsValue['2014'] =  npsValue['2014'].Q3 || {};
 
     if ( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+      npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       let diff: any = npsValue['2016'].NPS - npsValue['2015'].NPS;
           diff = Math.round(diff);
       let icon = "";
@@ -968,6 +990,7 @@ export class MapComponent implements OnInit {
       `);
     }
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+      npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
       layer.bindPopup(`<div>
           <h4>${feature.properties.dsm_id}</h2>            
           <table class="table table-hover">
@@ -990,6 +1013,8 @@ export class MapComponent implements OnInit {
       `);
     }
     else if ( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && (npsValue['2014'].NPS || npsValue['2014'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+      npsValue['2014'].NPS = Math.round(npsValue['2014'].NPS);
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       let diff: any = npsValue['2015'].NPS - npsValue['2014'].NPS;
            diff = Math.round(diff);
       let icon = "";
@@ -1031,6 +1056,7 @@ export class MapComponent implements OnInit {
       `);
     }
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       layer.bindPopup(`<div>
           <h4>${feature.properties.dsm_id}</h2>            
           <table class="table table-hover">
@@ -1073,6 +1099,8 @@ export class MapComponent implements OnInit {
     npsValue['2014'] =  npsValue['2014'].Q4 || {};
 
     if ( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+      npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       let diff: any = npsValue['2016'].NPS - npsValue['2015'].NPS;
           diff = Math.round(diff);
       let icon = "";
@@ -1113,6 +1141,7 @@ export class MapComponent implements OnInit {
       `);
     }
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
+      npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
       layer.bindPopup(`<div>
           <h4>${feature.properties.dsm_id}</h2>            
           <table class="table table-hover">
@@ -1135,6 +1164,8 @@ export class MapComponent implements OnInit {
       `);
     }
     else if ( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && (npsValue['2014'].NPS || npsValue['2014'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+      npsValue['2014'].NPS = Math.round(npsValue['2014'].NPS);
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       let diff: any = npsValue['2015'].NPS - npsValue['2014'].NPS;
            diff = Math.round(diff);
       let icon = "";
@@ -1176,6 +1207,7 @@ export class MapComponent implements OnInit {
       `);
     }
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
+      npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       layer.bindPopup(`<div>
           <h4>${feature.properties.dsm_id}</h2>            
           <table class="table table-hover">
