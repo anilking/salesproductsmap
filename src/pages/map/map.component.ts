@@ -15,9 +15,11 @@ export class MapComponent implements OnInit {
   public regionsData: any = {};
   public ctx: CanvasRenderingContext2D;
   public regionsList: any = [];
+  public brandNames: any = [];
   public yearsList: any = [];
   public selectedRegion: string = "";
   public selectedYear: string = "";
+  public selectedBrand: string = "";
   public isNpsRegions: boolean = false;
   public npsObject: any = {};
   public isCanvas: boolean = false;
@@ -31,6 +33,7 @@ export class MapComponent implements OnInit {
     this.mapInitialization();
     this.regionsList = ["Channel", "Region", "National"];
     this.yearsList = ["2015-14", "2016-15"];
+    this.brandNames = ["x","y","z"];
   }
   mapInitialization(){
     this.map = L.map('map') .setView([37.8, -96], 4);
@@ -457,6 +460,7 @@ export class MapComponent implements OnInit {
     this.selectedRegion = selectedRegion;
     this.selectedYear = "";
     this.selectedTab = "";
+    this.selectedBrand = "";
     this.isCanvas = false;
     let url = this.selectedRegion.toLocaleLowerCase() || "";
     if(url == "region"){
@@ -478,6 +482,12 @@ export class MapComponent implements OnInit {
         }
       );
 
+  }
+
+  brandChange(brandName){
+    this.selectedBrand = brandName || "";
+    this.selectedYear = "";
+    this.selectedTab = "";
   }
 
   yearChange(selectedYear) {
