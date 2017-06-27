@@ -320,13 +320,13 @@ export class MapComponent implements OnInit {
           diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
-        icon = 'glyphicon-arrow-up';
+        icon = 'glyphicon-arrow-up color-blue';
       }
       else{
-        icon = 'glyphicon-arrow-down';
+        icon = 'glyphicon-arrow-down color-red';
       }
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -358,7 +358,7 @@ export class MapComponent implements OnInit {
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
       npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -385,14 +385,14 @@ export class MapComponent implements OnInit {
            diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
-        icon = 'glyphicon-arrow-up';
+        icon = 'glyphicon-arrow-up color-blue';
       }
       else{
-        icon = 'glyphicon-arrow-down';
+        icon = 'glyphicon-arrow-down color-red';
       }
 
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -424,7 +424,7 @@ export class MapComponent implements OnInit {
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
       npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -662,13 +662,13 @@ export class MapComponent implements OnInit {
           diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
-        icon = 'glyphicon-arrow-up';
+        icon = 'glyphicon-arrow-up color-blue';
       }
       else{
-        icon = 'glyphicon-arrow-down';
+        icon = 'glyphicon-arrow-down color-red';
       }
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -700,7 +700,7 @@ export class MapComponent implements OnInit {
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
       npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -727,14 +727,14 @@ export class MapComponent implements OnInit {
            diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
-        icon = 'glyphicon-arrow-up';
+        icon = 'glyphicon-arrow-up color-blue';
       }
       else{
-        icon = 'glyphicon-arrow-down';
+        icon = 'glyphicon-arrow-down color-red';
       }
 
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -766,7 +766,7 @@ export class MapComponent implements OnInit {
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
       npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -813,13 +813,13 @@ export class MapComponent implements OnInit {
           diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
-        icon = 'glyphicon-arrow-up';
+        icon = 'glyphicon-arrow-up color-blue';
       }
       else{
-        icon = 'glyphicon-arrow-down';
+        icon = 'glyphicon-arrow-down color-red';
       }
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -851,7 +851,7 @@ export class MapComponent implements OnInit {
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
       npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -878,14 +878,14 @@ export class MapComponent implements OnInit {
            diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
-        icon = 'glyphicon-arrow-up';
+        icon = 'glyphicon-arrow-up color-blue';
       }
       else{
-        icon = 'glyphicon-arrow-down';
+        icon = 'glyphicon-arrow-down color-red';
       }
 
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -917,7 +917,7 @@ export class MapComponent implements OnInit {
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
       npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -964,13 +964,13 @@ export class MapComponent implements OnInit {
           diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
-        icon = 'glyphicon-arrow-up';
+        icon = 'glyphicon-arrow-up color-blue';
       }
       else{
-        icon = 'glyphicon-arrow-down';
+        icon = 'glyphicon-arrow-down color-red';
       }
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -1002,7 +1002,7 @@ export class MapComponent implements OnInit {
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
       npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -1029,14 +1029,14 @@ export class MapComponent implements OnInit {
            diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
-        icon = 'glyphicon-arrow-up';
+        icon = 'glyphicon-arrow-up color-blue';
       }
       else{
-        icon = 'glyphicon-arrow-down';
+        icon = 'glyphicon-arrow-down color-red';
       }
 
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -1068,7 +1068,7 @@ export class MapComponent implements OnInit {
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
       npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -1115,13 +1115,13 @@ export class MapComponent implements OnInit {
           diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
-        icon = 'glyphicon-arrow-up';
+        icon = 'glyphicon-arrow-up color-blue';
       }
       else{
-        icon = 'glyphicon-arrow-down';
+        icon = 'glyphicon-arrow-down color-red';
       }
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -1153,7 +1153,7 @@ export class MapComponent implements OnInit {
     else if( (npsValue['2016'].NPS || npsValue['2016'].NPS == 0.0) && feature.selecredYear.indexOf('2016') != -1) {
       npsValue['2016'].NPS = Math.round(npsValue['2016'].NPS);
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -1180,14 +1180,14 @@ export class MapComponent implements OnInit {
            diff = Math.round(diff);
       let icon = "";
       if(diff > 0){
-        icon = 'glyphicon-arrow-up';
+        icon = 'glyphicon-arrow-up color-blue';
       }
       else{
-        icon = 'glyphicon-arrow-down';
+        icon = 'glyphicon-arrow-down color-red';
       }
 
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>
@@ -1219,7 +1219,7 @@ export class MapComponent implements OnInit {
     else if( (npsValue['2015'].NPS || npsValue['2015'].NPS == 0.0) && feature.selecredYear.indexOf('2015') != -1) {
       npsValue['2015'].NPS = Math.round(npsValue['2015'].NPS);
       layer.bindPopup(`<div>
-          <h4>${feature.properties.dsm_id}</h2>            
+          <h4 class="set-margincls">${feature.properties.dsm_id}</h4>            
           <table class="table table-hover">
             <thead>
               <tr>

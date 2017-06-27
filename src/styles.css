@@ -11,3 +11,20 @@
     padding: 4px;
     text-align: center;
 }
+
+
+
+.color-blue{
+  color: blue
+}
+.color-red{
+  color: red
+}
+
+.leaflet-popup-content {
+    margin: 7px 7px !important;
+    line-height: 1.4;
+}
+.set-margincls{
+  margin-bottom: 0 !important;
+}
